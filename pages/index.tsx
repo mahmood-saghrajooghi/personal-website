@@ -25,7 +25,7 @@ const IndexPage = () => (
           when they're there, but you'll miss when they're not.
         </p>
         <p className='mb-16 color-sub'>
-          Listening to music is one of the things I enjoy the most. My most
+          Listening to music is one of the things I enjoy a lot. My most
           played song is{' '}
           <a
             className='link'
