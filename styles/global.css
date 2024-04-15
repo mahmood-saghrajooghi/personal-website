@@ -35,6 +35,12 @@ body {
   box-sizing: border-box;
 }
 
+#__next {
+  padding-left: var(--body-margin-left);
+  padding-right: var(--body-margin-right);
+  padding-bottom: env(--safe-area-inset-bottom);
+}
+
 body {
   height: 100%;
   font-family: var(--font-sans);
@@ -53,8 +59,11 @@ main {
 }
 
 footer {
+  position: relative;
+  left: calc(-1 * var(--body-margin-left));
   border-top: 1px solid var(--sand-6);
   height: var(--footer-height);
+  width: calc(100% + var(--body-margin-left) + var(--body-margin-right));
   background: var(--bg);
   padding: 0 var(--body-margin-left);
   color: var(--sand-12)
@@ -78,15 +87,6 @@ a:hover {
 
 i {
   font-family: "Newsreader","Signifier","Times",serif;
-}
-
-.main-grid {
-  display: grid;
-  grid-template-columns: 192px var(--content-width) 192px;
-  grid-column-gap: 24px;
-  -moz-column-gap: 24px;
-  column-gap: 24px;
-  align-items: flex-start;
 }
 
 .color-text {
@@ -115,4 +115,10 @@ i {
 .link:hover::before {
   background: var(--sand-8);
   transition: 100ms;
+}
+
+@media screen and (max-width: 768px){
+  body {
+    --page-top: 64px;
+  }
 }

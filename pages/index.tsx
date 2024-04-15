@@ -4,7 +4,6 @@ import Layout from '../components/layout/layout';
 const IndexPage = () => (
   <Layout>
     <div className='main-grid'>
-      <div></div>
       <article>
         <h1 className='mb-6 color-text'>Mahmood Sagharjooghi</h1>
         <p className='mb-16 color-sub'>
