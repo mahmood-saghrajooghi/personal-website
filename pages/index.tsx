@@ -11,7 +11,7 @@ const IndexPage = () => (
           <i>Web craftsman</i>. Creating delightful and smooth web experiences.
           Frontend dev at{' '}
           <a
-            className='underline'
+            className='link'
             target='_blank'
             href='https://www.Oneflow.com/'
           >
