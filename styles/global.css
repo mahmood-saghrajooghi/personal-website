@@ -1,19 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Newsreader:ital,opsz,wght@0,6..72,200;0,6..72,300;0,6..72,400;1,6..72,200;1,6..72,300;1,6..72,400&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200;0,6..72,300;0,6..72,400;1,6..72,200;1,6..72,300;1,6..72,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital@0;1&display=swap');
+
+@import '@radix-ui/colors/sand-dark.css';
+@import '@radix-ui/colors/slate-dark.css';
+
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 
-:root {
+body {
   --page-width: 1072px;
   --content-width: 640px;
 
-  --bg: #1a1a1a;
-  --text-color: #e5e5e5;
-  --fg: #f2f2f2;
+  --bg: var(--sand-2);
+  --text-color: var(--sand-12);
+  --sub-text-color: var(--sand-11);
 
   --page-top: 128px;
 
@@ -24,37 +28,18 @@
   --body-margin-left: max(24px,env(safe-area-inset-left));
   --body-margin-right: max(24px,env(safe-area-inset-right));
 
-  --gray1: #1a1a1a;
-  --gray2: #1c1c1c;
-  --gray3: #232323;
-  --gray4: #282828;
-  --gray5: #2e2e2e;
-  --gray6: #343434;
-  --gray7: #3e3e3e;
-  --gray8: #505050;
-  --gray9: #707070;
-  --gray10: #7e7e7e;
-  --gray11: #a0a0a0;
-  --gray12: #ededed;
-  --grayA1: hsla(0,0%,100%,0);
-  --grayA2: hsla(0,0%,100%,.026);
-  --grayA3: hsla(0,0%,100%,.056);
-  --grayA4: hsla(0,0%,100%,.077);
-  --grayA5: hsla(0,0%,100%,.103);
-  --grayA6: hsla(0,0%,100%,.129);
-  --grayA7: hsla(0,0%,100%,.172);
-  --grayA8: hsla(0,0%,100%,.249);
-  --grayA9: hsla(0,0%,100%,.386);
-  --grayA10: hsla(0,0%,100%,.446);
-  --grayA11: hsla(0,0%,100%,.592);
-  --grayA12: hsla(0,0%,100%,.923);
+  --font-sans: 'Nunito', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   height: 100%;
   font-family: var(--font-sans);
+  font-weight: 300;
   background: var(--bg);
-  color: var(--fg);
   /* to be removed */
   min-height: 100vh;
 }
@@ -68,19 +53,11 @@ main {
 }
 
 footer {
-  border-top: 1px solid var(--gray5);
-  position: relative;
+  border-top: 1px solid var(--sand-6);
   height: var(--footer-height);
-  width: calc(100% + var(--body-margin-right) + var(--body-margin-left));
-  left: calc(-1 * var(--body-margin-left));
   background: var(--bg);
-  z-index: var(--layer-header);
   padding: 0 var(--body-margin-left);
-}
-
-.footer-content {
-  max-width: var(--content-width);
-  color: var(--gray9)
+  color: var(--sand-12)
 }
 
 article {
@@ -112,7 +89,30 @@ i {
   align-items: flex-start;
 }
 
-/* to be removed */
-p {
-  color: var(--text-color)
+.color-text {
+  color: var(--text-color);
+}
+
+.color-sub {
+  color: var(--sub-text-color);
+}
+
+.link {
+  position: relative;
+}
+
+.link::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--sand-6);
+  transition: 280ms;
+}
+
+.link:hover::before {
+  background: var(--sand-8);
+  transition: 100ms;
 }
