@@ -21,8 +21,8 @@ const IndexPage = () => (
         <h2 className='mb-4 color-text'>Now</h2>
         <p className='mb-7 color-sub'>
           Doing side projects and diving deep into web fundamentals. I'm most passionate about
-          building performant small animations. Things that you may not notice
-          when they're there, but you'll miss them when they're not.
+          building performant small animations. Things you may not notice
+          when they're there, but you'll miss when they're not.
         </p>
         <p className='mb-16 color-sub'>
           Listening to music is one of the things I enjoy the most. My most
