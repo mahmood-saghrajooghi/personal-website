@@ -8,10 +8,10 @@
   },
   "dependencies": {
     "@radix-ui/colors": "^3.0.0",
-    "@radix-ui/react-tooltip": "^1.0.7",
     "next": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-spring": "^9.7.3",
     "sass": "^1.76.0"
   },
   "devDependencies": {

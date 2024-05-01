@@ -29,6 +29,8 @@ body {
   --body-margin-right: max(24px,env(safe-area-inset-right));
 
   --font-sans: 'Nunito', sans-serif;
+  --font-size-default: 16px;
+  --font-size-small: 12px;
 }
 
 * {
@@ -86,6 +88,10 @@ main {
       align-items: unset;
       justify-content: flex-start
   }
+}
+
+.left-col {
+  grid-column: 1
 }
 
 footer {
