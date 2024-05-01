@@ -1,0 +1,129 @@
+.container {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  pointer-events: none;
+  z-index: 4;
+  transform: translate(-9px, -7px);
+}
+
+.cursor {
+  color: #000;
+  animation: glitch 5s step-end infinite,
+}
+
+.before {
+  position: absolute;
+  color: #000;
+  animation: opacity 5s step-end infinite, movement 8s step-end infinite;
+}
+
+.after {
+  position: absolute;
+  color: #000;
+  animation:  opacity 5s step-end infinite, movement 8s -3s step-end infinite;
+}
+
+
+@keyframes movement {
+  0% {
+    top: 0px;
+    left: -8px;
+  }
+
+  15% {
+    top: -4px;
+    left: 6px;
+  }
+
+  40% {
+    top: 4px;
+    left: -4px;
+  }
+
+  60% {
+    top: 7px;
+    left: -4px;
+  }
+
+  75% {
+    top: -3px;
+    left: 5px;
+  }
+
+  100% {
+    top: 4px;
+    left: -7px;
+  }
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0.1;
+  }
+
+  5% {
+    opacity: 0.3;
+  }
+
+  30% {
+    opacity: 0.4;
+  }
+
+  45% {
+    opacity: 0.6;
+  }
+
+  76% {
+    opacity: 0.4;
+  }
+
+  90% {
+    opacity: 0.5;
+  }
+
+  1%,
+  7%,
+  33%,
+  47%,
+  78%,
+  93% {
+    opacity: 0;
+  }
+}
+
+
+@keyframes glitch {
+  0% {
+    opacity: 0.1;
+  }
+
+  5% {
+    opacity: 0.7;
+  }
+
+  30% {
+    opacity: 0.4;
+  }
+
+  45% {
+    opacity: 0.6;
+  }
+
+  76% {
+    opacity: 0.4;
+  }
+
+  90% {
+    opacity: 0.8;
+  }
+
+  1%,
+  7%,
+  33%,
+  47%,
+  78%,
+  93% {
+    opacity: 1;
+  }
+}
