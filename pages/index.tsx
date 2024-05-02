@@ -8,7 +8,7 @@ const IndexPage = () => {
   return (
     <Layout>
       <div className='main-grid'>
-        <div className='left-col pt-[195px]'>
+        <div className='left-col pt-[195px] hidden md:block'>
           <Card>
             Hover over the glitching text ;D
           </Card>
