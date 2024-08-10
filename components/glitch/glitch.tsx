@@ -1,11 +1,9 @@
-import { forwardRef, MouseEventHandler, useEffect, useState } from 'react';
-import Cursor from './cursor';
 import styles from './glitch.module.scss'
 
 type Props = {
   children: string;
-  handleMouseEnter: MouseEventHandler<HTMLSpanElement>;
-  handleMouseLeave: MouseEventHandler<HTMLSpanElement>;
+  handleMouseEnter: React.MouseEventHandler<HTMLSpanElement>;
+  handleMouseLeave: React.MouseEventHandler<HTMLSpanElement>;
   customCursorVisible: boolean;
 }
 

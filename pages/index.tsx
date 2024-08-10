@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import Layout from '../components/layout/layout';
 import Glitch from '../components/glitch/glitch';
@@ -8,8 +8,6 @@ const IndexPage = () => {
   const [customCursorVisible, setCustomCursorVisible] = useState(false);
 
   const handleMouseEnter = () => {
-    console.log('mouse enter');
-
     setCustomCursorVisible(true);
   }
 
@@ -24,10 +22,10 @@ const IndexPage = () => {
         <div className='left-col hidden md:block'>
         </div>
         <article>
-          <h1 className='mb-6 color-text' style={{ '--index': 1 }} data-blur-in-animation>
+          <h1 className='mb-6 color-text' style={{ '--index': 1 } as React.CSSProperties} data-blur-in-animation>
             Mahmood Sagharjooghi
           </h1>
-          <p className='mb-16 color-sub' style={{ '--index': 2 }} data-blur-in-animation>
+          <p className='mb-16 color-sub' style={{ '--index': 2 } as React.CSSProperties} data-blur-in-animation>
             <i>Web craftsman</i>. Creating delightful and smooth web experiences.
             Frontend dev at{' '}
             <a
@@ -39,10 +37,10 @@ const IndexPage = () => {
             </a>
             .
           </p>
-          <h2 className='mb-4 color-text' style={{ '--index': 3 }} data-blur-in-animation>
+          <h2 className='mb-4 color-text' style={{ '--index': 3 } as React.CSSProperties} data-blur-in-animation>
             Present
           </h2>
-          <p className='mb-7 color-sub' style={{ '--index': 4 }} data-blur-in-animation>
+          <p className='mb-7 color-sub' style={{ '--index': 4 } as React.CSSProperties} data-blur-in-animation>
             Doing side projects and diving deep into web fundamentals. I'm most passionate about
             building performant small <Glitch
             handleMouseEnter={handleMouseEnter}
@@ -52,7 +50,7 @@ const IndexPage = () => {
             . Things you may not notice
             when they're there, but you'll miss when they're not.
           </p>
-          <p className='mb-16 color-sub' style={{ '--index': 5 }} data-blur-in-animation>
+          <p className='mb-16 color-sub' style={{ '--index': 5 } as React.CSSProperties} data-blur-in-animation>
             Listening to music is one of the things I enjoy a lot. My most
             played song is{' '}
             <a
