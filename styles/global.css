@@ -47,7 +47,7 @@ body {
 }
 
 main {
-  min-height: calc(100vh - var(--footer-height));
+  min-height: calc(100dvh - var(--footer-height));
   position: relative;
   padding-top: var(--page-top);
   padding-left: var(--body-padding-left);
