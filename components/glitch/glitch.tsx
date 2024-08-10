@@ -1,32 +1,36 @@
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, MouseEventHandler, useEffect, useState } from 'react';
 import Cursor from './cursor';
+import styles from './glitch.module.scss'
 
 type Props = {
   children: string;
+  handleMouseEnter: MouseEventHandler<HTMLSpanElement>;
+  handleMouseLeave: MouseEventHandler<HTMLSpanElement>;
+  customCursorVisible: boolean;
 }
 
-const Glitch = forwardRef<HTMLSpanElement, Props>(function ({ children }, ref) {
-  const [customCursorVisible, setCustomCursorVisible] = useState(false);
-
-  const handleMouseEnter = () => {
-    setCustomCursorVisible(true);
-  }
-
-  const handleMouseLeave = () => {
-    setCustomCursorVisible(false);
-  }
+function Glitch ({
+  children,
+  handleMouseEnter,
+  handleMouseLeave,
+  customCursorVisible
+}: Props) {
 
   return (
-    <>
-      <Cursor visible={customCursorVisible} />
+    <span
+      className={`${styles.glitch} cursor-default inline-block${customCursorVisible ? ' !cursor-none' : ''}`}
+    >
       <span
-        className={`glitch cursor-default inline-block${customCursorVisible ? ' !cursor-none' : ''}`}
+        className={styles.glitchAnimation}
         data-text={children}
+      >{children}</span>
+      <span
+        className={styles.glitchMain}
+        aria-hidden="true"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        ref={ref}
       >{children}</span>
-    </>
+    </span>
   )
-});
+};
 export default Glitch;

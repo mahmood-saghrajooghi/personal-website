@@ -4,10 +4,9 @@ export default function Layout ({ children }) {
       <main>
         {children}
       </main>
-      <footer>
-        <div className='flex justify-between items-center text-sm mx-auto h-full max-w-[640px] color-sub'>
-          <div>Be the goat.</div>
-          <div>2024</div>
+      <footer style={{ '--index': 6 }} data-blur-in-animation>
+        <div className='flex justify-between items-center text-sm mx-auto h-full color-sub'>
+          <div>Be the goat ツ</div>
         </div>
       </footer>
     </>
