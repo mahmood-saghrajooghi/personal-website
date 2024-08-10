@@ -20,7 +20,7 @@ const Glitch = forwardRef<HTMLSpanElement, Props>(function ({ children }, ref) {
     <>
       <Cursor visible={customCursorVisible} />
       <span
-        className={`glitch inline-block${customCursorVisible ? ' cursor-none' : ''}`}
+        className={`glitch cursor-default inline-block${customCursorVisible ? ' !cursor-none' : ''}`}
         data-text={children}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
