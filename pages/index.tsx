@@ -64,7 +64,7 @@ const IndexPage = () => {
           <h2 className='mb-4 color-text' style={{ '--index': 6 } as React.CSSProperties} data-blur-in-animation>
             Links
           </h2>
-          <div className='flex color-sub gap-2' style={{ '--index': 7 } as React.CSSProperties} data-blur-in-animation>
+          <div className='flex mb-16 color-sub gap-2' style={{ '--index': 7 } as React.CSSProperties} data-blur-in-animation>
             <Link
               href='https://x.com/mem_fara'
               target='_blank'
