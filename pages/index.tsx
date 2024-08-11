@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Layout from '../components/layout/layout';
 import Glitch from '../components/glitch/glitch';
 import Cursor from '../components/glitch/cursor';
+import Link from '../components/link/link';
 
 const IndexPage = () => {
   const [customCursorVisible, setCustomCursorVisible] = useState(false);
@@ -19,8 +20,6 @@ const IndexPage = () => {
     <Layout>
       <Cursor visible={customCursorVisible} />
       <div className='main-grid'>
-        <div className='left-col hidden md:block'>
-        </div>
         <article>
           <h1 className='mb-6 color-text' style={{ '--index': 1 } as React.CSSProperties} data-blur-in-animation>
             Mahmood Sagharjooghi
@@ -62,6 +61,25 @@ const IndexPage = () => {
             </a>{' '}
             by Zane Alexander.
           </p>
+          <h2 className='mb-4 color-text' style={{ '--index': 6 } as React.CSSProperties} data-blur-in-animation>
+            Links
+          </h2>
+          <div className='flex color-sub gap-2' style={{ '--index': 7 } as React.CSSProperties} data-blur-in-animation>
+            <Link
+              href='https://x.com/mem_fara'
+              target='_blank'
+              className='px-1'
+            >
+              X
+            </Link>
+            <Link
+              href='https://github.com/mahmood-saghrajooghi'
+              target='_blank'
+              className='px-1'
+            >
+              Github
+            </Link>
+          </div>
         </article>
       </div>
     </Layout>
