@@ -97,7 +97,6 @@ footer {
 }
 
 footer > div {
-  padding: 0 var(--body-padding-left);
   max-width: var(--content-width);
 }
 
