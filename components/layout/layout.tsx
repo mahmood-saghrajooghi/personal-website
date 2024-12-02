@@ -1,14 +1,13 @@
-export default function Layout ({ children }) {
+import { BlurAnimationProvider } from '../blur-animation/context';
+import { Footer } from './footer';
+
+export default function Layout ({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <BlurAnimationProvider>
       <main>
         {children}
       </main>
-      <footer style={{ '--index': 8 } as React.CSSProperties} data-blur-in-animation>
-        <div className='flex justify-between items-center text-sm h-full color-sub'>
-          <div>Be the goat ツ</div>
-        </div>
-      </footer>
-    </>
-  )
+      <Footer />
+    </BlurAnimationProvider>
+  );
 }
