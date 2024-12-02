@@ -23,12 +23,12 @@ const IndexPage = () => {
       <div className='main-grid'>
         <article className='color-text'>
           <BlurIn asChild>
-            <h1 className='color-sub mb-6' style={{ '--index': 1 } as React.CSSProperties} data-blur-in-animation>
+            <h1 className='color-sub mb-6'>
               Principles
             </h1>
           </BlurIn>
           <BlurIn asChild>
-            <div className='mb-6' style={{ '--index': 2 } as React.CSSProperties} data-blur-in-animation>
+            <div className='mb-6'>
               <ul className='-sub ml-4'>
                 <li className='mb-2 list-decimal'>
                   Finish what you have started before moving on to the next thing.
@@ -37,7 +37,7 @@ const IndexPage = () => {
             </div>
           </BlurIn>
           <BlurIn asChild>
-            <div className='mb-6 flex items-center gap-2' style={{ '--index': 3 } as React.CSSProperties} data-blur-in-animation>
+            <div className='mb-6 flex items-center gap-2'>
               <NavLink
                 href='/'
                 className='px-1 flex color-sub items-center gap-2'
