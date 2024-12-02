@@ -22,15 +22,15 @@ const IndexPage = () => {
     <Layout>
       <Cursor visible={customCursorVisible} />
       <div className='main-grid'>
-        <article>
+        <article className='color-text'>
           <BlurIn asChild>
-            <h1 className='color-text mb-6'>
+            <h1 className='mb-6'>
               Mahmood Sagharjooghi
             </h1>
           </BlurIn>
 
           <BlurIn asChild>
-            <p className='mb-16 color-sub'>
+            <p className='mb-16'>
               <i>Web craftsman</i>. Creating delightful and smooth web experiences.
               Frontend dev at{' '}
               <a
@@ -44,31 +44,30 @@ const IndexPage = () => {
             </p>
           </BlurIn>
           <BlurIn asChild>
-            <h2 className='mb-4 color-text' style={{ '--index': 3 } as React.CSSProperties} data-blur-in-animation>
+            <h2 className='mb-4 color-sub'>
               Links
             </h2>
           </BlurIn>
           <BlurIn asChild>
-            <div className='mb-16 color-sub' style={{ '--index': 4 } as React.CSSProperties} data-blur-in-animation>
-
+            <div className='mb-16'>
               <NavLink
                 href='/principles'
-                className='px-1 color-text'
+                className='px-1'
               >
                 Principles
               </NavLink>
-              <p className='mt-2'>
+              <p className='mt-2 color-sub'>
                 A collection of principles that guide my work and life.
               </p>
             </div>
           </BlurIn>
           <BlurIn asChild>
-            <h2 className='mb-4 color-text' style={{ '--index': 4 } as React.CSSProperties} data-blur-in-animation>
+            <h2 className='mb-4 color-sub'>
               Present
             </h2>
           </BlurIn>
           <BlurIn asChild>
-            <p className='mb-7 color-sub' style={{ '--index': 4 } as React.CSSProperties} data-blur-in-animation>
+            <p className='mb-7'>
               Doing side projects and diving deep into web fundamentals. I'm most passionate about
               building performant small <Glitch
                 handleMouseEnter={handleMouseEnter}
@@ -80,7 +79,7 @@ const IndexPage = () => {
             </p>
           </BlurIn>
           <BlurIn asChild>
-            <p className='mb-16 color-sub' style={{ '--index': 5 } as React.CSSProperties} data-blur-in-animation>
+            <p className='mb-16'>
               Listening to music is one of the things I enjoy a lot. My most
               played song is{' '}
               <a
@@ -94,12 +93,12 @@ const IndexPage = () => {
             </p>
           </BlurIn>
           <BlurIn asChild>
-            <h2 className='mb-4 color-text' style={{ '--index': 6 } as React.CSSProperties} data-blur-in-animation>
+            <h2 className='mb-4 color-sub'>
               Socials
             </h2>
           </BlurIn>
           <BlurIn asChild>
-            <div className='flex mb-16 color-sub gap-2' style={{ '--index': 7 } as React.CSSProperties} data-blur-in-animation>
+            <div className='flex mb-16 gap-2'>
               <Link
                 href='https://x.com/mem_fara'
                 target='_blank'
