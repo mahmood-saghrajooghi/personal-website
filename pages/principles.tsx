@@ -40,7 +40,7 @@ const IndexPage = () => {
             <div className='mb-6 flex items-center gap-2'>
               <NavLink
                 href='/'
-                className='px-1 flex color-sub items-center gap-2'
+                className='px-1 flex items-center gap-2'
               >
                 back to home
               </NavLink>
