@@ -37,7 +37,7 @@ const IndexPage = () => {
                   Finish what you have started before moving on to the next thing.
                 </li>
                 <li className='mb-2 list-decimal'>
-                  Don't get stuck in thinking too much. Just do it.
+                  Stop overthinking. Take action.
                 </li>
               </ul>
             </div>
