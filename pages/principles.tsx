@@ -31,6 +31,9 @@ const IndexPage = () => {
             <div className='mb-6'>
               <ul className='-sub ml-4'>
                 <li className='mb-2 list-decimal'>
+                  Focus!
+                </li>
+                <li className='mb-2 list-decimal'>
                   Forgive yourself!
                 </li>
                 <li className='mb-2 list-decimal'>
