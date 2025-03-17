@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200;0,6..72,300;0,6..72,400;1,6..72,200;1,6..72,300;1,6..72,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital@0;1&display=swap');
 
@@ -171,5 +170,58 @@ i {
   100% {
     filter: blur(0);
     opacity: 1;
+  }
+}
+
+.astronaut-container {
+  position: fixed;
+  z-index: 10;
+  top: 20vh;
+  right: 15vw;
+  animation: float 20s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-30px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-50px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-20px) rotate(-5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+.astronaut {
+  animation: astronaut-rotate 25s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+@keyframes astronaut-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(15deg);
+  }
+  40% {
+    transform: rotate(5deg);
+  }
+  60% {
+    transform: rotate(20deg);
+  }
+  80% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
   }
 }
