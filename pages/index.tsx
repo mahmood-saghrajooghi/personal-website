@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Image from 'next/image'
 
 import Layout from '../components/layout/layout';
 import Glitch from '../components/glitch/glitch';
@@ -43,9 +42,6 @@ const IndexPage = () => {
       <Cursor visible={customCursorVisible} />
       <div className='main-grid'>
         <article className='color-text'>
-          <div className='astronaut-container'>
-            <Image className='astronaut' src="/images/astronaut.png" alt="Profile" width={80} height={80} />
-          </div>
           <div style={{ marginTop: 120 }}>
             <BlurIn asChild>
 
