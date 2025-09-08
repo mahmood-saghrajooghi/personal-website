@@ -73,6 +73,19 @@ const IndexPage = () => {
             <BlurIn asChild>
               <div className='mb-16'>
                 <NavLink
+                  href='/writing'
+                  className='px-1'
+                >
+                  Writing
+                </NavLink>
+                <p className='mt-2 color-sub'>
+                  Walk with me as I wonder through the world of thought.
+                </p>
+              </div>
+            </BlurIn>
+            <BlurIn asChild>
+              <div className='mb-16'>
+                <NavLink
                   href='/principles'
                   className='px-1'
                 >

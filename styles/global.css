@@ -9,6 +9,10 @@
 @tailwind utilities;
 
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   --page-width: 1072px;
   --content-width: 640px;
