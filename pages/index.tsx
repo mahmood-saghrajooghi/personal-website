@@ -71,7 +71,7 @@ const IndexPage = () => {
               </h2>
             </BlurIn>
             <BlurIn asChild>
-              <div className='mb-16'>
+              <div className='mb-8'>
                 <NavLink
                   href='/writing'
                   className='px-1'
