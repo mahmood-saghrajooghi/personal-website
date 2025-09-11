@@ -44,7 +44,7 @@ const ThinkingMachines = () => {
               </li>
               <li className='mb-2 list-decimal'>
                 The thinking tools you have and the framework with which you think determines how
-                effective it your mind is in turning the inputs into useful outputs. (blueprint and the internals)
+                effective it your mind is in turning the inputs into useful outputs. (the engine)
               </li>
             </ul>
           </BlurIn>
@@ -106,7 +106,7 @@ const ThinkingMachines = () => {
 
           <BlurIn asChild>
             <h2 className='color-sub mb-4'>
-              Blueprint and the internals
+              The engine
             </h2>
           </BlurIn>
 
