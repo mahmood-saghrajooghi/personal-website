@@ -62,12 +62,19 @@ const ThinkingMachines = () => {
               this perfectly:
             </p>
           </BlurIn>
-          <BlurIn>
+          <BlurIn className='relative'>
             <Blockquote className='my-7'>
               <i>Acquire</i> worldly wisdom and adjust your behavior accordingly. If your new behavior
               gives you a little temporary unpopularity with your <i>peer group</i>... then to hell
               with them! <sup id="unref-1"><NavLink href="#1">1</NavLink></sup>
             </Blockquote>
+            <div className='lg:absolute lg:w-48 lg:top-0 lg:left-[calc(100%+1.5rem)] text-sm mb-7 ml-4' id="1">
+              1. Maybe this is not the perfect way of using this quote. I used it with an emphasis
+              on the "acquire" and "peer group". But the part that is easy to miss is "adjust
+              your behavior accordingly". This goes back to what I said in
+              the <NavLink href="/writing">introduction</NavLink> about action being required in
+              order for thought to be productive.
+            </div>
           </BlurIn>
           <BlurIn asChild>
             <p className='mb-7' id="back-to-1">
@@ -84,6 +91,10 @@ const ThinkingMachines = () => {
               for you in life and work better in education. It's way better than just giving the
               basic concepts. <sup id="unref-2"><NavLink href="#2">2</NavLink></sup>
             </Blockquote>
+            <div className='lg:absolute lg:w-48 lg:top-1/2 lg:left-[calc(100%+1.5rem)] text-sm mb-7 ml-4' id="2">
+              2. Again, using the quote in a twisted way. Here, Charlie is talking about the importance
+              of getting to know the people in order to better understand their ideas.
+            </div>
           </BlurIn>
           <BlurIn asChild>
             <p className='mb-7' id="back-to-1">
@@ -98,19 +109,96 @@ const ThinkingMachines = () => {
               Blueprint and the internals
             </h2>
           </BlurIn>
+
           <BlurIn asChild>
-            <ul className='color-sub ml-4'>
-                <li className='mb-2 list-decimal' id="1">
-                  Maybe this is not the perfect way of using this quote. I used it with an emphasis
-                  on the "acquire" and "peer group". But the part that is easy to miss is "adjust
-                  your behavior accordingly". This goes back to what I said in the <NavLink href="/writing">introduction</NavLink>
-                  about action being required in order for thought to be productive. <sup><NavLink href="#unref-1">⏎</NavLink></sup>
-                </li>
-                <li className='mb-2 list-decimal' id="2">
-                  Again, using the quote in a twisted way. Here, Charlie is talking about the importance
-                  of getting to know the people in order to better understand their ideas.
-                </li>
-              </ul>
+            <p className='mb-7' id="back-to-1">
+              Just reading a lot might not be enough. As I said, two people can have the same amount
+              of experience, but one can have better ideas. I think it's because they think in a different way.
+              They have better tools at their disposal and know when to use each one.
+              Charlie Munger calls these tools mental models and calls for building "a latticework
+              of mental models".
+            </p>
+          </BlurIn>
+
+          <BlurIn asChild>
+            <p className='mb-7' id="back-to-1">
+              But how have they built such framework?
+            </p>
+          </BlurIn>
+
+          <BlurIn asChild>
+            <p className='mb-7' id="back-to-1">
+              I think the best way to do it, is by learning the fundamental sciences and trying to
+              use them in your day-to-day life. It cab be hard science, or social science. They both
+              will become handy in specific situations. I'd suggest learning math, physics, and statistics,
+              and psychology.
+            </p>
+          </BlurIn>
+
+          {/* <BlurIn asChild>
+            <p className='mb-7' id="back-to-1">
+              This is where the brain differs from a machine. What is beautiful about the brain, is
+              that just by reading (assuming that the quality of the input is good and
+              it is an active kind of reading) the mind improves itself.
+            </p>
+          </BlurIn> */}
+
+          <BlurIn asChild>
+            <p className='mb-7' id="back-to-1">
+              When facing a problem, you should be able to break it down into smaller problems, ones
+              that can be solved by using the fundamental ideas you have learned, and then compose
+              them together to form a solution for the original problem. And this is what you will
+              hopefully learn by learning these fundamental ideas.
+            </p>
+          </BlurIn>
+
+          <BlurIn asChild>
+            <p className='mb-7' id="back-to-1">
+              You may find these books helpful for critical thinking:
+            </p>
+          </BlurIn>
+
+          <BlurIn asChild>
+            <ul className='ml-4 mb-7'>
+              <li className='mb-2 list-decimal'>
+                How to Read a Book Revised and Updated Edition by Charles Van Doren and Mortimer J. Adler
+              </li>
+              <li className='mb-2 list-decimal'>
+                Asking the Right Questions: A Guide to Critical Thinking by Neil Browne and Stuart M. Keeley
+              </li>
+              <li className='mb-2 list-decimal'>
+                Poor Charlie's Almanack: The Essential Wit and Wisdom of Charles T. Munger by Charles T. Munger
+              </li>
+            </ul>
+          </BlurIn>
+
+          <BlurIn asChild>
+            <h2 className='color-sub mb-4'>
+              Notes
+            </h2>
+          </BlurIn>
+
+          <BlurIn asChild>
+            <p className='mb-7' id="back-to-1">
+              This is not a static document. It is a living one.
+              As I said in the <NavLink href="/writing">introduction</NavLink>, I'm thinking this through
+              as I write about it.
+            </p>
+          </BlurIn>
+
+          <BlurIn asChild>
+            <p className='mb-7' id="back-to-1">
+              As a fellow learner who is at the beginning of this lifelong journey, I'm figuring this out as I go.
+              There are definitely flaws in this writing and the core idea is half baked. But I still
+              think there is value in sharing it with other people. If you have any feedback, please
+              feel free to reach out to me through my socials.
+            </p>
+          </BlurIn>
+
+          <BlurIn asChild>
+            <p className='mb-7' id="back-to-1">
+              Happy thinking!
+            </p>
           </BlurIn>
 
           <BlurIn className='mb-6 flex items-center gap-2'>

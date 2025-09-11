@@ -43,8 +43,9 @@ const IndexPage = () => {
               Thinking itself is not enough. Thoughts need to be written. One reason, is that humans
               are forgetful. There has been cases that I repeated the same errors multiple times,
               each time to come to the same conclusion after solving the problem, only to forget it later.
-              Another reason that is equally important is that the kind of thinking I am talking about
-              here, only happens when writing. As Leslie Lamport has said:
+              Another reason that is more important is that not every kind of thinking is going to have
+              productive results. The kind of thinking I am talking about here, only happens
+              when writing. As Leslie Lamport has said:
             </p>
           </BlurIn>
           <BlurIn>
@@ -54,9 +55,12 @@ const IndexPage = () => {
           </BlurIn>
           <BlurIn asChild>
             <p className='mb-7'>
-              So what you are reading here, is me <i>thinking</i>. And I suggest you to <i>think</i> for
-              your self. The ideas that I will be talking about here are very simple and basic.
-              But you won't really understand them unless you write about it and try to explain it yourself.
+              So what you are reading here, is me <i>thinking</i>. And the reason for this is for me
+              to build a framework for thinking to help me live a better life and achieve my goals.
+              I suggest you to also <i>think</i> for your self.
+              The ideas that I will be talking about here are very simple and basic.
+              But you won't really understand them unless you write about it and try to explain it
+              yourself.
             </p>
           </BlurIn>
           <BlurIn asChild>
@@ -68,15 +72,8 @@ const IndexPage = () => {
           </BlurIn>
           <BlurIn>
             <Blockquote className='my-7'>
-            if I have seen further, it is by standing on the shoulders of giants.
+              If I have seen further, it is by standing on the shoulders of giants.
             </Blockquote>
-          </BlurIn>
-          <BlurIn asChild>
-            <p className='mb-7'>
-              What you will read here is me trying to build
-              a framework for my own thinking. The main goal for this framework is to help me live a
-              better life and achieve my goals.
-            </p>
           </BlurIn>
           <BlurIn asChild>
             <p className='mb-7'>
@@ -84,7 +81,7 @@ const IndexPage = () => {
             </p>
           </BlurIn>
 
-          <BlurIn className='mb-7'>
+          <BlurIn className='mb-7 flex items-center gap-2'>
             <NavLink href="/writing/thinking-machines">Thinking machines</NavLink>
           </BlurIn>
 
