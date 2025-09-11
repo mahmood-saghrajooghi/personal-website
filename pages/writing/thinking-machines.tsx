@@ -39,8 +39,8 @@ const ThinkingMachines = () => {
           <BlurIn asChild>
             <ul className='ml-4 mb-7'>
               <li className='mb-2 list-decimal'>
-                The amount and the quality of your mind's output, is highly dependent on the of the input
-                it receives. (fuel)
+                The amount and the quality of your mind's output, is highly dependent on the quality
+                of the input it receives. (fuel)
               </li>
               <li className='mb-2 list-decimal'>
                 The thinking tools you have and the framework with which you think determines how
