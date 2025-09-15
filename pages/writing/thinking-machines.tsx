@@ -19,7 +19,7 @@ const ThinkingMachines = () => {
               Early in college, I was walking with one of my friends Erfan and we were discussing a
               matter when he said something that sounded very insightful. What was more interesting
               than the answer itself, was that how come a person that is the same age as me and
-              more or less has the same amount experienced on the matter, can have better ideas about it?
+              more or less has the same amount experienced on the matter, have better ideas about it?
             </p>
           </BlurIn>
           <BlurIn asChild>
@@ -72,7 +72,7 @@ const ThinkingMachines = () => {
               1. Maybe this is not the perfect way of using this quote. I used it with an emphasis
               on the "acquire" and "peer group". But the part that is easy to miss is "adjust
               your behavior accordingly". This goes back to what I said in
-              the <NavLink href="/writing">introduction</NavLink> about action being required in
+              the <NavLink href="/writing/#action">introduction</NavLink> about action being required in
               order for thought to be productive.
             </div>
           </BlurIn>

@@ -32,15 +32,15 @@ const IndexPage = () => {
           </BlurIn>
           <BlurIn asChild>
             <p className='mb-7'>
-              Quite often, I wonder in the world of thought. It can be a productive thing to do if
-              action is followed. Otherwise it can turn one into <Link href='https://en.wikipedia.org/wiki/Oblomov' target="_" className='px-1'>Oblomov</Link>.
-              But that caution shouldn't stop one from thinking in order to remove one's bad ideas and replace
+              Quite often, I wander in the world of thought. <span id="action">It can be productive if it's followed by
+              action. Otherwise, it can turn one into <Link href='https://en.wikipedia.org/wiki/Oblomov' target="_" className='px-1'>Oblomov</Link>.</span> But
+              that caution shouldn't stop one from thinking in order to remove one's bad ideas and replace
               them with better ones.
             </p>
           </BlurIn>
           <BlurIn asChild>
             <p className='mb-7'>
-              Thinking itself is not enough. Thoughts need to be written. One reason, is that humans
+              Thinking itself is not enough. Thoughts need to be written. One reason is that humans
               are forgetful. There has been cases that I repeated the same errors multiple times,
               each time to come to the same conclusion after solving the problem, only to forget it later.
               Another reason that is more important is that not every kind of thinking is going to have

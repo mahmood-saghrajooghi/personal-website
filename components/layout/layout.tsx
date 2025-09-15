@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { BlurAnimationProvider } from '../blur-animation/context';
 import { Footer } from './footer';
 

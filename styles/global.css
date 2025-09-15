@@ -132,11 +132,13 @@ i {
 }
 
 .color-text {
-  color: var(--text-color);
+  --original-color: var(--text-color);
+  color: var(--original-color);
 }
 
 .color-sub {
-  color: var(--sub-text-color);
+  --original-color: var(--sub-text-color);
+  color: var(--original-color);
 }
 
 .link {
@@ -161,9 +163,14 @@ i {
 }
 
 [data-blur-in-animation] {
+  --blur-in-animation-name: blur-in;
+  --blur-in-animation-duration: 600ms;
+  --blur-in-animation-timing-function: ease-out;
+  --blur-in-animation-fill-mode: both;
+  --blur-in-animation-delay: calc(var(--delay) * var(--index));
   --delay: 130ms;
-  animation: blur-in 600ms both ease-out;
-  animation-delay: calc(var(--delay) * var(--index));
+  animation: var(--blur-in-animation-name) var(--blur-in-animation-duration) var(--blur-in-animation-fill-mode) var(--blur-in-animation-timing-function);
+  animation-delay: var(--blur-in-animation-delay);
 }
 
 @keyframes blur-in {
@@ -174,5 +181,35 @@ i {
   100% {
     filter: blur(0);
     opacity: 1;
+  }
+}
+
+.color-text:has(:target),
+.color-text:has(:target) .color-sub {
+  --color-text-animation-name: color-text;
+  --color-text-animation-duration: 1s;
+  --color-text-animation-timing-function: ease;
+  --color-text-animation-fill-mode: both;
+  --color-text-animation-delay: 4s;
+
+  color: var(--sand-7);
+  animation-name: var(--color-text-animation-name);
+  animation-duration: var(--color-text-animation-duration);
+  animation-timing-function: var(--color-text-animation-timing-function);
+  animation-delay: var(--color-text-animation-delay);
+  animation-fill-mode: var(--color-text-animation-fill-mode);
+}
+
+:target {
+  color: var(--text-color);
+}
+
+@keyframes color-text {
+  0% {
+    color: var(--sand-7);
+  }
+
+  100% {
+    color: var(--original-color);
   }
 }
