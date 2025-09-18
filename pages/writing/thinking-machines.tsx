@@ -3,6 +3,16 @@ import BlurIn from '../../components/blur-animation/BlurIn';
 import Layout from '../../components/layout/layout';
 import NavLink from '../../components/link/nav-link';
 
+// something that can determine the difference in thinking is the goal that one pursues for that
+// thinking. For example, looking back at a work experience, different people will have different
+// learnings. This is highly dependent on what goals the have by thinking back on that experience.
+// Someone can be looking for an understanding of the whole product creation process, while someone else
+// might be looking for an understanding of the technical aspects.
+//
+// At the moment it is not clear to me on how to set goals for the thinking. I think this might be
+// different that setting life goals for example. Some goals in thinking might have better outcomes
+// regardless of the goals themselves.
+
 const ThinkingMachines = () => {
   return (
     <Layout>

@@ -81,8 +81,11 @@ const IndexPage = () => {
             </p>
           </BlurIn>
 
-          <BlurIn className='mb-7 flex items-center gap-2'>
+          <BlurIn className='mb-2 flex items-center gap-2'>
             <NavLink href="/writing/thinking-machines">Thinking machines</NavLink>
+          </BlurIn>
+          <BlurIn className='mb-7 flex items-center gap-2'>
+            <NavLink href="/writing/you-deserve-it">You deserve it</NavLink>
           </BlurIn>
 
           <BlurIn asChild>
