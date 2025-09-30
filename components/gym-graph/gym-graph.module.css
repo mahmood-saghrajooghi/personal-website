@@ -62,34 +62,28 @@
   border-radius: 2px;
   cursor: pointer;
   transition: all 100ms ease;
-  border: 1px solid transparent;
 }
 
 .cell:hover {
-  border: 1px solid var(--sand-8);
   transform: scale(1.1);
   z-index: 1;
 }
 
-/* Activity levels using your sand color palette */
-.level0 {
+/* Binary attendance states for two people */
+.none {
   background-color: var(--sand-3);
 }
 
-.level1 {
-  background-color: var(--sand-5);
+.person1Only {
+  background-color: #3b82f6; /* Blue for person 1 */
 }
 
-.level2 {
-  background-color: var(--sand-7);
+.person2Only {
+  background-color: #10b981; /* Green for person 2 */
 }
 
-.level3 {
-  background-color: var(--sand-9);
-}
-
-.level4 {
-  background-color: var(--sand-11);
+.both {
+  background: linear-gradient(135deg, #3b82f6 50%, #10b981 50%);
 }
 
 .future {
@@ -129,20 +123,52 @@
 .tooltipDate {
   font-size: 11px;
   opacity: 0.8;
-  margin-top: 2px;
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tooltipPerson {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 2px 0;
+}
+
+.person1Dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #3b82f6; /* Blue for person 1 */
+  display: inline-block;
+}
+
+.person2Dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #10b981; /* Green for person 2 */
+  display: inline-block;
 }
 
 .legend {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 12px;
   margin-top: 16px;
   font-size: 11px;
   color: var(--sub-text-color);
+  flex-wrap: wrap;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .legendText {
-  margin: 0 4px;
+  white-space: nowrap;
 }
 
 .legendCell {

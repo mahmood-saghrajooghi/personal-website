@@ -7,18 +7,21 @@ const generateSampleData = () => {
   const data = [];
   const today = new Date();
 
-  // Generate random activity for the past year
+  // Generate random binary attendance for two people for the past year
   for (let i = 0; i < 365; i++) {
     const date = new Date(today);
     date.setDate(today.getDate() - i);
 
-    // Random workout count (0-5), with some days having no workouts
-    const count = Math.random() > 0.5 ? Math.floor(Math.random() * 5) : 0;
+    // Random binary attendance for each person (60% chance of going)
+    const person1Went = Math.random() > 0.4;
+    const person2Went = Math.random() > 0.4;
 
-    if (count > 0) {
+    // Only include days where at least one person went
+    if (person1Went || person2Went) {
       data.push({
         date: date.toISOString().split('T')[0],
-        count
+        person1: person1Went,
+        person2: person2Went
       });
     }
   }
@@ -39,13 +42,17 @@ export default function Gym() {
 
           <BlurIn>
             <p className='mb-8 color-sub'>
-              My gym activity over the past year. Each square represents a day,
-              with darker colors indicating more workouts.
+              Gym attendance tracking for two people over the past year.
+              Each square shows who went to the gym that day.
             </p>
           </BlurIn>
 
           <BlurIn>
-            <GymActivityGraph data={gymData} />
+            <GymActivityGraph
+              data={gymData}
+              person1Name="Mahmood"
+              person2Name="Partner"
+            />
           </BlurIn>
         </article>
       </div>

@@ -3,15 +3,22 @@ import styles from './gym-graph.module.css';
 
 interface ActivityData {
   date: string;
-  count: number;
+  person1: boolean; // true if person 1 went to gym
+  person2: boolean; // true if person 2 went to gym
 }
 
 interface GymActivityGraphProps {
   data?: ActivityData[];
+  person1Name?: string;
+  person2Name?: string;
 }
 
-const GymActivityGraph: React.FC<GymActivityGraphProps> = ({ data = [] }) => {
-  const [hoveredCell, setHoveredCell] = useState<{ date: string; count: number } | null>(null);
+const GymActivityGraph: React.FC<GymActivityGraphProps> = ({
+  data = [],
+  person1Name = 'Person 1',
+  person2Name = 'Person 2'
+}) => {
+  const [hoveredCell, setHoveredCell] = useState<{ date: string; person1: boolean; person2: boolean } | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   // Generate weeks from January 1st of current year to today
@@ -47,16 +54,15 @@ const GymActivityGraph: React.FC<GymActivityGraphProps> = ({ data = [] }) => {
 
   // Create a map for quick lookup of activity data
   const activityMap = new Map(
-    data.map(d => [d.date, d.count])
+    data.map(d => [d.date, { person1: d.person1, person2: d.person2 }])
   );
 
-  // Get activity level (0-4) based on count
-  const getActivityLevel = (count: number): number => {
-    if (count === 0) return 0;
-    if (count === 1) return 1;
-    if (count === 2) return 2;
-    if (count === 3) return 3;
-    return 4; // 4 or more
+  // Get status class based on who went to gym
+  const getStatusClass = (person1: boolean, person2: boolean): string => {
+    if (person1 && person2) return 'both';
+    if (person1) return 'person1Only';
+    if (person2) return 'person2Only';
+    return 'none';
   };
 
   const formatDate = (date: Date): string => {
@@ -72,8 +78,8 @@ const GymActivityGraph: React.FC<GymActivityGraphProps> = ({ data = [] }) => {
     });
   };
 
-  const handleMouseEnter = (date: Date, count: number, event: React.MouseEvent) => {
-    setHoveredCell({ date: getDateDisplay(date), count });
+  const handleMouseEnter = (date: Date, person1: boolean, person2: boolean, event: React.MouseEvent) => {
+    setHoveredCell({ date: getDateDisplay(date), person1, person2 });
     setMousePosition({ x: event.clientX, y: event.clientY });
   };
 
@@ -139,17 +145,19 @@ const GymActivityGraph: React.FC<GymActivityGraphProps> = ({ data = [] }) => {
             <div key={weekIndex} className={styles.week}>
               {week.map((date, dayIndex) => {
                 const dateStr = formatDate(date);
-                const count = activityMap.get(dateStr) || 0;
-                const level = getActivityLevel(count);
+                const activity = activityMap.get(dateStr);
+                const person1 = activity?.person1 || false;
+                const person2 = activity?.person2 || false;
+                const statusClass = getStatusClass(person1, person2);
                 const isFuture = date > new Date();
 
                 return (
                   <div
                     key={dayIndex}
-                    className={`${styles.cell} ${styles[`level${level}`]} ${
+                    className={`${styles.cell} ${styles[statusClass]} ${
                       isFuture ? styles.future : ''
                     }`}
-                    onMouseEnter={(e) => !isFuture && handleMouseEnter(date, count, e)}
+                    onMouseEnter={(e) => !isFuture && handleMouseEnter(date, person1, person2, e)}
                     onMouseLeave={handleMouseLeave}
                   />
                 );
@@ -168,18 +176,36 @@ const GymActivityGraph: React.FC<GymActivityGraphProps> = ({ data = [] }) => {
           }}
         >
           <div className={styles.tooltipContent}>
-            <strong>{hoveredCell.count} workout{hoveredCell.count !== 1 ? 's' : ''}</strong>
+            <div className={styles.tooltipPerson}>
+              <span className={styles.person1Dot}></span>
+              {person1Name}: {hoveredCell.person1 ? '✓' : '✗'}
+            </div>
+            <div className={styles.tooltipPerson}>
+              <span className={styles.person2Dot}></span>
+              {person2Name}: {hoveredCell.person2 ? '✓' : '✗'}
+            </div>
             <div className={styles.tooltipDate}>{hoveredCell.date}</div>
           </div>
         </div>
       )}
 
       <div className={styles.legend}>
-        <span className={styles.legendText}>Less</span>
-        {[0, 1, 2, 3, 4].map((level) => (
-          <div key={level} className={`${styles.legendCell} ${styles[`level${level}`]}`} />
-        ))}
-        <span className={styles.legendText}>More</span>
+        <div className={styles.legendItem}>
+          <div className={`${styles.legendCell} ${styles.none}`} />
+          <span className={styles.legendText}>None</span>
+        </div>
+        <div className={styles.legendItem}>
+          <div className={`${styles.legendCell} ${styles.person1Only}`} />
+          <span className={styles.legendText}>{person1Name}</span>
+        </div>
+        <div className={styles.legendItem}>
+          <div className={`${styles.legendCell} ${styles.person2Only}`} />
+          <span className={styles.legendText}>{person2Name}</span>
+        </div>
+        <div className={styles.legendItem}>
+          <div className={`${styles.legendCell} ${styles.both}`} />
+          <span className={styles.legendText}>Both</span>
+        </div>
       </div>
     </div>
   );
