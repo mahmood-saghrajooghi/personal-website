@@ -1,0 +1,164 @@
+.container {
+  width: 100%;
+  padding: 24px 0;
+}
+
+.graph {
+  position: relative;
+  overflow-x: visible;
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.monthLabels {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 14px;
+  gap: 3px;
+  margin-bottom: 4px;
+  margin-left: 43px;
+  font-size: var(--font-size-small);
+  color: var(--sub-text-color);
+}
+
+.monthLabel {
+  font-size: 11px;
+}
+
+.grid {
+  display: flex;
+  gap: 3px;
+  align-items: start;
+}
+
+.dayLabels {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 40px;
+  padding-right: 8px;
+}
+
+.dayLabel {
+  height: 14px;
+  font-size: 10px;
+  color: var(--sub-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cell {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 100ms ease;
+  border: 1px solid transparent;
+}
+
+.cell:hover {
+  border: 1px solid var(--sand-8);
+  transform: scale(1.1);
+  z-index: 1;
+}
+
+/* Activity levels using your sand color palette */
+.level0 {
+  background-color: var(--sand-3);
+}
+
+.level1 {
+  background-color: var(--sand-5);
+}
+
+.level2 {
+  background-color: var(--sand-7);
+}
+
+.level3 {
+  background-color: var(--sand-9);
+}
+
+.level4 {
+  background-color: var(--sand-11);
+}
+
+.future {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+.tooltip {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  animation: fadeIn 150ms ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tooltipContent {
+  background: var(--sand-12);
+  color: var(--sand-2);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.tooltipDate {
+  font-size: 11px;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
+  font-size: 11px;
+  color: var(--sub-text-color);
+}
+
+.legendText {
+  margin: 0 4px;
+}
+
+.legendCell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .graph {
+    overflow-x: scroll;
+  }
+
+  .container {
+    margin: 0 -24px;
+    padding: 24px;
+  }
+}
