@@ -71,7 +71,7 @@
 
 /* Binary attendance states for two people */
 .none {
-  background-color: var(--sand-3);
+  background-color: var(--sand-4);
 }
 
 .person1Only {
@@ -92,24 +92,6 @@
   pointer-events: none;
 }
 
-.tooltip {
-  position: fixed;
-  pointer-events: none;
-  z-index: 1000;
-  animation: fadeIn 150ms ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .tooltipContent {
   background: var(--sand-12);
   color: var(--sand-2);
@@ -118,6 +100,7 @@
   font-size: 12px;
   white-space: nowrap;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
 }
 
 .tooltipDate {
@@ -139,7 +122,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #3b82f6; /* Blue for person 1 */
+  background-color: var(--gym-person1);
   display: inline-block;
 }
 
@@ -147,7 +130,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #10b981; /* Green for person 2 */
+  background-color: var(--gym-person2);
   display: inline-block;
 }
 
