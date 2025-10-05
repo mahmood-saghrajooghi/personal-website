@@ -146,13 +146,20 @@ const GymActivityGraph: React.FC<GymActivityGraphProps> = ({
 
   const weeks = generateWeeks();
 
-  // Scroll to show the most recent dates on mount
+  // Scroll to show the most recent dates on mount and when data changes
   useEffect(() => {
     if (graphRef.current) {
-      // Scroll to the right to show current date
-      graphRef.current.scrollLeft = graphRef.current.scrollWidth;
+      // Use requestAnimationFrame to ensure content is rendered before scrolling
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          if (graphRef.current) {
+            // Scroll to the right to show current date
+            graphRef.current.scrollLeft = graphRef.current.scrollWidth;
+          }
+        }, 100);
+      });
     }
-  }, []);
+  }, [data.length]);
 
   // Create a map for quick lookup of activity data
   const activityMap = new Map(
