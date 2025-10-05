@@ -65,14 +65,18 @@ const GymActivityGraph: React.FC<GymActivityGraphProps> = ({
   data = []
 }) => {
   const graphRef = useRef<HTMLDivElement>(null);
+  const [userColorMap, setUserColorMap] = useState<Map<string, string>>(new Map());
   
   // Get all unique users and assign them persistent colors
-  const userColorMap = useMemo(() => {
-    // Load existing color assignments from localStorage
-    const storedColors = localStorage.getItem('gym-user-colors');
-    const existingColorMap: Record<string, string> = storedColors 
-      ? JSON.parse(storedColors) 
-      : {};
+  useEffect(() => {
+    // Load existing color assignments from localStorage (client-side only)
+    const existingColorMap: Record<string, string> = 
+      typeof window !== 'undefined' 
+        ? (() => {
+            const storedColors = localStorage.getItem('gym-user-colors');
+            return storedColors ? JSON.parse(storedColors) : {};
+          })()
+        : {};
     
     // Get all unique users from current data
     const allUsers = new Set<string>();
@@ -102,11 +106,13 @@ const GymActivityGraph: React.FC<GymActivityGraphProps> = ({
         usedColors.add(availableColor);
       }
     });
-    // Save updated color assignments to localStorage
-
-    localStorage.setItem('gym-user-colors', JSON.stringify(existingColorMap));
     
-    return colorMap;
+    // Save updated color assignments to localStorage (client-side only)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('gym-user-colors', JSON.stringify(existingColorMap));
+    }
+    
+    setUserColorMap(colorMap);
   }, [data]);
   // Generate weeks for the last ~7 months ending today
   const generateWeeks = () => {

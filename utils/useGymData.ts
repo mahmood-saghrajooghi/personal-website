@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase, auth } from './supabase';
 
 export interface ActivityData {
@@ -17,112 +18,119 @@ export interface GymEntry {
   username?: string;
 }
 
-export const useGymData = () => {
-  const [data, setData] = useState<ActivityData[]>([]);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [user, setUser] = useState<any>(null);
-
-  // Transform Supabase entries to ActivityData format
-  // Group by date and collect usernames for each date
-  const transformToActivityData = (entries: GymEntry[]): ActivityData[] => {
-    const dateMap = new Map<string, { attended: boolean; users: string[] }>();
-    
-    entries.forEach(entry => {
-      if (!dateMap.has(entry.date)) {
-        dateMap.set(entry.date, { attended: false, users: [] });
-      }
-      
-      const dateData = dateMap.get(entry.date)!;
-      
-      // If anyone attended on this date, mark it as attended
-      if (entry.attended) {
-        dateData.attended = true;
-        if (entry.username) {
-          dateData.users.push(entry.username);
-        }
-      }
-    });
-    
-    return Array.from(dateMap.entries()).map(([date, { attended, users }]) => ({
-      date,
-      attended,
-      users
-    }));
-  };
-
-  // Load gym data from Supabase - now loads ALL users' data
-  const loadGymData = async (userId: string) => {
-    try {
-      // Call the database function to get all gym entries with usernames
-      const { data: entries, error } = await supabase
-        .rpc('get_gym_entries_with_usernames');
-
-      if (error) {
-        console.error('Error loading gym data:', error);
-        return;
-      }
-
-      // Transform Supabase data to ActivityData format
-      const transformedData = transformToActivityData(entries || []);
-      setData(transformedData);
-    } catch (error) {
-      console.error('Error loading gym data:', error);
+// Transform Supabase entries to ActivityData format
+// Group by date and collect usernames for each date
+const transformToActivityData = (entries: GymEntry[]): ActivityData[] => {
+  const dateMap = new Map<string, { attended: boolean; users: string[] }>();
+  
+  entries.forEach(entry => {
+    if (!dateMap.has(entry.date)) {
+      dateMap.set(entry.date, { attended: false, users: [] });
     }
-    setIsLoaded(true);
-  };
-
-  // Check authentication status
-  useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const currentUser = await auth.getCurrentUser();
-        setUser(currentUser);
-        // Load gym data if user is authenticated
-        if (currentUser) {
-          await loadGymData(currentUser.id);
-        }
-      } catch (error) {
-        console.error('Error checking user authentication:', error);
-        setUser(null);
-      } finally {
-        // Always set loaded to true after attempting to check user
-        setIsLoaded(true);
-      }
-    };
     
-    checkUser();
+    const dateData = dateMap.get(entry.date)!;
+    
+    // If anyone attended on this date, mark it as attended
+    if (entry.attended) {
+      dateData.attended = true;
+      if (entry.username) {
+        dateData.users.push(entry.username);
+      }
+    }
+  });
+  
+  return Array.from(dateMap.entries()).map(([date, { attended, users }]) => ({
+    date,
+    attended,
+    users
+  }));
+};
 
-    // Listen for auth changes
+// Fetch gym data from Supabase
+const fetchGymData = async (): Promise<ActivityData[]> => {
+  const { data: entries, error } = await supabase
+    .rpc('get_gym_entries_with_usernames');
+
+  if (error) {
+    console.error('Error loading gym data:', error);
+    throw error;
+  }
+
+  return transformToActivityData(entries || []);
+};
+
+// Fetch current user
+const fetchCurrentUser = async () => {
+  try {
+    return await auth.getCurrentUser();
+  } catch (error) {
+    console.error('Error checking user authentication:', error);
+    return null;
+  }
+};
+
+// Check if user has logged a specific date
+const checkUserLoggedDate = async (userId: string, date: string): Promise<boolean> => {
+  if (!userId) return false;
+
+  try {
+    const { data: entries, error } = await supabase
+      .from('gym_entries')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('date', date)
+      .limit(1);
+
+    if (error) {
+      console.error('Error checking user log:', error);
+      return false;
+    }
+
+    return entries && entries.length > 0;
+  } catch (error) {
+    console.error('Error checking user log:', error);
+    return false;
+  }
+};
+
+export const useGymData = () => {
+  const queryClient = useQueryClient();
+
+  // Query for current user
+  const { data: user, isLoading: isUserLoading } = useQuery({
+    queryKey: ['currentUser'],
+    queryFn: fetchCurrentUser,
+    staleTime: Infinity, // User data doesn't change often
+  });
+
+  // Query for gym data - fetch for everyone (public data)
+  const { data: gymData = [], isLoading: isGymDataLoading } = useQuery({
+    queryKey: ['gymData'],
+    queryFn: fetchGymData,
+  });
+
+  // Set up auth state change listener
+  useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        setUser(session?.user ?? null);
-        if (session?.user) {
-          await loadGymData(session.user.id);
-        } else {
-          setData([]);
-        }
+        queryClient.setQueryData(['currentUser'], session?.user ?? null);
+        // Always refresh gym data on auth state change
+        queryClient.invalidateQueries({ queryKey: ['gymData'] });
       }
     );
 
-    // Set a timeout to ensure loading doesn't persist indefinitely
-    const timeout = setTimeout(() => {
-      setIsLoaded(true);
-    }, 5000); // 5 second timeout
-
     return () => {
       subscription.unsubscribe();
-      clearTimeout(timeout);
     };
-  }, []);
+  }, [queryClient]);
 
-  const logActivity = async (date: string, attended: boolean) => {
-    if (!user) {
-      console.error('User not authenticated');
-      return;
-    }
+  // Mutation for logging activity
+  const logActivityMutation = useMutation({
+    mutationFn: async ({ date, attended }: { date: string; attended: boolean }) => {
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
 
-    try {
-      // Upsert entry for the current user
       const entry = {
         user_id: user.id,
         date,
@@ -137,28 +145,25 @@ export const useGymData = () => {
         });
 
       if (error) {
-        console.error('Error logging activity:', error);
-        return;
+        throw error;
       }
-      // Reload data to reflect changes
-      await loadGymData(user.id);
-    } catch (error) {
+    },
+    onSuccess: () => {
+      // Invalidate and refetch gym data
+      queryClient.invalidateQueries({ queryKey: ['gymData'] });
+    },
+    onError: (error) => {
       console.error('Error logging activity:', error);
     }
-  };
+  });
 
-  const getActivityForDate = (date: string): boolean => {
-    const entry = data.find((entry) => entry.date === date);
-    return entry?.attended ?? false;
-  };
+  // Mutation for deleting activity
+  const deleteActivityMutation = useMutation({
+    mutationFn: async (date: string) => {
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
 
-  const deleteActivity = async (date: string) => {
-    if (!user) {
-      console.error('User not authenticated');
-      return;
-    }
-
-    try {
       const { error } = await supabase
         .from('gym_entries')
         .delete()
@@ -166,47 +171,44 @@ export const useGymData = () => {
         .eq('date', date);
 
       if (error) {
-        console.error('Error deleting activity:', error);
-        return;
+        throw error;
       }
-      // Reload data to reflect changes
-      await loadGymData(user.id);
-    } catch (error) {
+    },
+    onSuccess: () => {
+      // Invalidate and refetch gym data
+      queryClient.invalidateQueries({ queryKey: ['gymData'] });
+    },
+    onError: (error) => {
       console.error('Error deleting activity:', error);
     }
+  });
+
+  const logActivity = (date: string, attended: boolean) => {
+    logActivityMutation.mutate({ date, attended });
+  };
+
+  const deleteActivity = (date: string) => {
+    deleteActivityMutation.mutate(date);
+  };
+
+  const getActivityForDate = (date: string): boolean => {
+    const entry = gymData.find((entry) => entry.date === date);
+    return entry?.attended ?? false;
   };
 
   const hasUserLoggedDate = async (date: string): Promise<boolean> => {
     if (!user) return false;
-
-    try {
-      const { data: entries, error } = await supabase
-        .from('gym_entries')
-        .select('*')
-        .eq('user_id', user.id)
-        .eq('date', date)
-        .limit(1);
-
-      if (error) {
-        console.error('Error checking user log:', error);
-        return false;
-      }
-
-      return entries && entries.length > 0;
-    } catch (error) {
-      console.error('Error checking user log:', error);
-      return false;
-    }
+    return checkUserLoggedDate(user.id, date);
   };
 
-  const refreshData = async () => {
-    if (user) {
-      await loadGymData(user.id);
-    }
+  const refreshData = () => {
+    queryClient.invalidateQueries({ queryKey: ['gymData'] });
   };
+
+  const isLoaded = !isUserLoading;
 
   return {
-    data,
+    data: gymData,
     logActivity,
     deleteActivity,
     getActivityForDate,
@@ -214,7 +216,9 @@ export const useGymData = () => {
     isLoaded,
     user,
     isAuthenticated: !!user,
-    refreshData
+    refreshData,
+    isLoading: isUserLoading || isGymDataLoading,
+    isMutating: logActivityMutation.isPending || deleteActivityMutation.isPending,
   };
 };
 

@@ -1,22 +1,21 @@
 "use client";
 
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import BlurIn from '../components/blur-animation/BlurIn';
 import Layout from '../components/layout/layout';
 import GymActivityGraph from '../components/gym-graph/GymActivityGraph';
 import GymLogger from '../components/gym-graph/GymLogger';
-import AuthForm from '../components/auth/AuthForm';
-import ProfileSettings from '../components/profile/ProfileSettings';
 import { useGymData } from '../utils/useGymData';
 import { auth } from '../utils/supabase';
 
 export default function Gym() {
   const { data, logActivity, deleteActivity, getActivityForDate, hasUserLoggedDate, isLoaded, user, isAuthenticated, refreshData } = useGymData();
+  const router = useRouter();
   const [selectedDate, setSelectedDate] = useState(() => {
     const today = new Date();
     return today.toISOString().split('T')[0];
   });
-  const [showSettings, setShowSettings] = useState(false);
 
   console.log('data', data);
 
@@ -54,19 +53,6 @@ export default function Gym() {
     );
   }
 
-  // Show auth form if not authenticated
-  if (!isAuthenticated) {
-    return (
-      <Layout>
-        <div className='main-grid'>
-          <article className='color-text'>
-            <AuthForm />
-          </article>
-        </div>
-      </Layout>
-    );
-  }
-
   return (
     <Layout>
       <div className='main-grid'>
@@ -76,21 +62,32 @@ export default function Gym() {
               Gym
             </h1>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-              <span className="text-sm text-gray-600 truncate max-w-[200px] sm:max-w-none">
-                Welcome, {user?.email}
-              </span>
-              <button
-                onClick={() => setShowSettings(!showSettings)}
-                className="px-3 py-1 text-sm border border-(--sand-9) rounded-md shadow-xs text-(--sand-12) bg-(--sand-2) hover:bg-(--sand-3) focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-(--sand-9) transition-colors whitespace-nowrap"
-              >
-                {showSettings ? 'Hide Settings' : 'Profile Settings'}
-              </button>
-              <button
-                onClick={handleSignOut}
-                className="px-3 py-1 text-sm border border-(--sand-9) rounded-md shadow-xs text-(--sand-1) bg-(--sand-12) hover:bg-(--sand-11) focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-(--sand-9) transition-colors whitespace-nowrap"
-              >
-                Sign Out
-              </button>
+              {isAuthenticated ? (
+                <>
+                  <span className="text-sm text-gray-600 truncate max-w-[200px] sm:max-w-none">
+                    Welcome, {user?.email}
+                  </span>
+                  <button
+                    onClick={() => router.push('/gym/profile')}
+                    className="px-3 py-1 text-sm border border-(--sand-9) rounded-md shadow-xs text-(--sand-12) bg-(--sand-2) hover:bg-(--sand-3) focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-(--sand-9) transition-colors whitespace-nowrap"
+                  >
+                    Profile Settings
+                  </button>
+                  <button
+                    onClick={handleSignOut}
+                    className="px-3 py-1 text-sm border border-(--sand-9) rounded-md shadow-xs text-(--sand-1) bg-(--sand-12) hover:bg-(--sand-11) focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-(--sand-9) transition-colors whitespace-nowrap"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => router.push('/gym/login')}
+                  className="px-3 py-1 text-sm border border-(--sand-9) rounded-md shadow-xs text-(--sand-1) bg-(--sand-12) hover:bg-(--sand-11) focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-(--sand-9) transition-colors whitespace-nowrap"
+                >
+                  Sign In
+                </button>
+              )}
             </div>
           </div>
 
@@ -102,24 +99,22 @@ export default function Gym() {
             </p>
           </BlurIn>
 
-          {showSettings && user && (
-            <ProfileSettings userId={user.id} onProfileUpdate={refreshData} />
-          )}
-
           <BlurIn>
             <GymActivityGraph
               data={data}
             />
           </BlurIn>
 
-          <BlurIn>
-            <GymLogger
-              onLogActivity={handleLogActivity}
-              onDeleteActivity={handleDeleteActivity}
-              hasUserLoggedDate={hasUserLoggedDate}
-              existingData={existingDataForSelectedDate}
-            />
-          </BlurIn>
+          {isAuthenticated && (
+            <BlurIn>
+              <GymLogger
+                onLogActivity={handleLogActivity}
+                onDeleteActivity={handleDeleteActivity}
+                hasUserLoggedDate={hasUserLoggedDate}
+                existingData={existingDataForSelectedDate}
+              />
+            </BlurIn>
+          )}
         </article>
       </div>
     </Layout>
