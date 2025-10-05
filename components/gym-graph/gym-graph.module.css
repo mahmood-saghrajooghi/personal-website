@@ -1,0 +1,372 @@
+.container {
+  width: 100%;
+  padding: 24px 0;
+}
+
+.graph {
+  position: relative;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  scroll-behavior: smooth;
+}
+
+.monthLabels {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 14px;
+  gap: 3px;
+  margin-bottom: 4px;
+  margin-left: 43px;
+  font-size: var(--font-size-small);
+  color: var(--sub-text-color);
+}
+
+.monthLabel {
+  font-size: 11px;
+}
+
+.grid {
+  display: flex;
+  gap: 3px;
+  align-items: start;
+}
+
+.dayLabels {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 40px;
+  padding-right: 8px;
+}
+
+.dayLabel {
+  height: 14px;
+  font-size: 10px;
+  color: var(--sub-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cell {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 100ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cell:hover {
+  transform: scale(1.1);
+  z-index: 1;
+}
+
+/* Split cell layouts using conic gradients */
+.cellSingle {
+  width: 100%;
+  height: 100%;
+}
+
+/* Pie chart split for 2+ users using conic gradients */
+.cellPie {
+  width: 100%;
+  height: 100%;
+}
+
+/* Attendance states */
+.none {
+  background-color: var(--sand-4);
+}
+
+.future {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+.tooltipContent {
+  background: var(--sand-12);
+  color: var(--sand-2);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  max-width: 300px;
+}
+
+.tooltipDate {
+  font-size: 11px;
+  opacity: 0.8;
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tooltipStatus {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 2px 0;
+  font-weight: 500;
+}
+
+.tooltipUsers {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tooltipUsersLabel {
+  font-size: 10px;
+  opacity: 0.7;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tooltipUser {
+  font-size: 11px;
+  padding: 2px 0;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tooltipUserColor {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* User Legend */
+.userLegend {
+  padding: 0 38px;
+}
+
+.userLegendTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sub-text-color);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.userLegendItems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.userLegendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: var(--sand-2);
+}
+
+.userLegendColor {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.userLegendName {
+  font-size: 12px;
+  color: var(--sand-12);
+  white-space: nowrap;
+}
+
+/* Logger Styles */
+.loggerContainer {
+  margin-top: 48px;
+  padding: 32px;
+  background: var(--sand-2);
+  border-radius: 12px;
+  border: 1px solid var(--sand-4);
+  max-width: 500px;
+}
+
+@media (min-width: 768px) {
+  .loggerContainer {
+    margin: 24px auto 32px;
+    padding: 24px;
+  }
+}
+
+
+.loggerTitle {
+  font-size: 20px;
+  margin-bottom: 24px;
+  color: var(--sand-12);
+  font-weight: 600;
+}
+
+.loggerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sub-text-color);
+}
+
+.dateInput {
+  padding: 10px 12px;
+  border: 1px solid var(--sand-6);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--sand-1);
+  color: var(--sand-12);
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.dateInput:hover {
+  border-color: var(--sand-8);
+}
+
+.dateInput:focus {
+  outline: none;
+  border-color: var(--gym-person1);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.dateDisplay {
+  font-size: 12px;
+  color: var(--sub-text-color);
+  font-style: italic;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid var(--sand-4);
+  background: var(--sand-1);
+  transition: all 200ms ease;
+}
+
+.checkboxLabel:hover {
+  border-color: var(--sand-6);
+  background: var(--sand-2);
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--gym-person1);
+}
+
+.checkboxText {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--sand-12);
+  font-weight: 500;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.submitButton {
+  flex: 1;
+  min-width: 150px;
+  padding: 12px 24px;
+  background: var(--sand-12);
+  color: var(--sand-1);
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.submitButton:hover {
+  background: var(--sand-11);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.submitButton:active {
+  transform: translateY(0);
+}
+
+.successMessage {
+  padding: 12px 16px;
+  background: var(--gym-person2);
+  color: white;
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+  animation: slideIn 200ms ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    margin: 0 -24px;
+    padding: 24px;
+  }
+
+  .loggerContainer {
+    padding: 24px;
+    margin: 48px -24px 64px;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+}
