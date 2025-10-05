@@ -1,19 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { useSpring, animated } from 'react-spring';
 import styles from './gym-graph.module.css';
 
 interface ActivityData {
   date: string;
-  person1: boolean; // true if person 1 went to gym
-  person2: boolean; // true if person 2 went to gym
+  attended: boolean; // true if any user went to gym
+  users?: string[]; // usernames of users who attended
 }
 
 interface GymActivityGraphProps {
   data?: ActivityData[];
-  person1Name?: string;
-  person2Name?: string;
 }
+
+// Color palette for users
+const USER_COLORS = [
+  '#3b82f6', // blue
+  '#ef4444', // red
+  '#10b981', // green
+  '#f59e0b', // amber
+  '#8b5cf6', // violet
+  '#ec4899', // pink
+  '#06b6d4', // cyan
+  '#f97316', // orange
+  '#6366f1', // indigo
+  '#84cc16', // lime
+  '#d946ef', // fuchsia
+  '#14b8a6', // teal
+];
 
 interface AnimatedTooltipContentProps {
   children: React.ReactNode;
@@ -48,23 +62,65 @@ const AnimatedTooltipContent = React.forwardRef<HTMLDivElement, AnimatedTooltipC
 AnimatedTooltipContent.displayName = 'AnimatedTooltipContent';
 
 const GymActivityGraph: React.FC<GymActivityGraphProps> = ({
-  data = [],
-  person1Name = 'Person 1',
-  person2Name = 'Person 2'
+  data = []
 }) => {
+  const graphRef = useRef<HTMLDivElement>(null);
+  
+  // Get all unique users and assign them persistent colors
+  const userColorMap = useMemo(() => {
+    // Load existing color assignments from localStorage
+    const storedColors = localStorage.getItem('gym-user-colors');
+    const existingColorMap: Record<string, string> = storedColors 
+      ? JSON.parse(storedColors) 
+      : {};
+    
+    // Get all unique users from current data
+    const allUsers = new Set<string>();
+    data.forEach(d => {
+      if (d.users) {
+        d.users.forEach(user => allUsers.add(user));
+      }
+    });
+    
+    // Track which colors are already in use
+    const usedColors = new Set(Object.values(existingColorMap));
+    const colorMap = new Map<string, string>();
+    
+    // Assign colors to all users
+    allUsers.forEach(user => {
+      if (existingColorMap[user]) {
+        // Use existing color assignment
+        colorMap.set(user, existingColorMap[user]);
+      } else {
+        
+        // Find next available color
+        const availableColor = USER_COLORS.find(color => !usedColors.has(color)) 
+          || USER_COLORS[Object.keys(existingColorMap).length % USER_COLORS.length];
+        
+        colorMap.set(user, availableColor);
+        existingColorMap[user] = availableColor;
+        usedColors.add(availableColor);
+      }
+    });
+    // Save updated color assignments to localStorage
 
-  // Generate weeks from January 1st of current year to today
+    localStorage.setItem('gym-user-colors', JSON.stringify(existingColorMap));
+    
+    return colorMap;
+  }, [data]);
+  // Generate weeks for the last ~7 months ending today
   const generateWeeks = () => {
     const weeks: Date[][] = [];
     const today = new Date();
-
-    // Start from January 1st of current year
-    const startDate = new Date(today.getFullYear(), 0, 1);
+    
+    // Go back approximately 7 months (210 days)
+    const startDate = new Date(today);
+    startDate.setDate(today.getDate() - 210);
 
     // End at today
     const endDate = new Date(today);
 
-    // Find the Sunday before or on January 1st
+    // Find the Sunday before or on the start date
     const firstSunday = new Date(startDate);
     firstSunday.setDate(startDate.getDate() - startDate.getDay());
 
@@ -84,17 +140,56 @@ const GymActivityGraph: React.FC<GymActivityGraphProps> = ({
 
   const weeks = generateWeeks();
 
+  // Scroll to show the most recent dates on mount
+  useEffect(() => {
+    if (graphRef.current) {
+      // Scroll to the right to show current date
+      graphRef.current.scrollLeft = graphRef.current.scrollWidth;
+    }
+  }, []);
+
   // Create a map for quick lookup of activity data
   const activityMap = new Map(
-    data.map(d => [d.date, { person1: d.person1, person2: d.person2 }])
+    data.map(d => [d.date, { attended: d.attended, users: d.users || [] }])
   );
 
-  // Get status class based on who went to gym
-  const getStatusClass = (person1: boolean, person2: boolean): string => {
-    if (person1 && person2) return 'both';
-    if (person1) return 'person1Only';
-    if (person2) return 'person2Only';
-    return 'none';
+  // Render a split cell based on multiple users using conic gradients
+  const renderSplitCell = (users: string[]) => {
+    if (users.length === 0) {
+      return null;
+    }
+    
+    if (users.length === 1) {
+      // Single user - solid color
+      return (
+        <div 
+          className={styles.cellSingle}
+          style={{ backgroundColor: userColorMap.get(users[0]) }}
+        />
+      );
+    }
+    
+    // Multiple users - use conic gradient to create pie chart
+    const slicePercentage = 100 / users.length;
+    
+    // Build conic-gradient stop list
+    const gradientStops = users.map((user, index) => {
+      const color = userColorMap.get(user);
+      const startPercent = slicePercentage * index;
+      const endPercent = slicePercentage * (index + 1);
+      
+      // Each color occupies its slice of the pie
+      return `${color} ${startPercent}% ${endPercent}%`;
+    }).join(', ');
+    
+    return (
+      <div 
+        className={styles.cellPie}
+        style={{ 
+          background: `conic-gradient(from 30deg, ${gradientStops})`
+        }}
+      />
+    );
   };
 
   const formatDate = (date: Date): string => {
@@ -137,7 +232,7 @@ const GymActivityGraph: React.FC<GymActivityGraphProps> = ({
   return (
     <Tooltip.Provider delayDuration={200}>
       <div className={styles.container}>
-        <div className={styles.graph}>
+        <div className={styles.graph} ref={graphRef}>
           <div className={styles.monthLabels}>
             {monthLabels.map((label, i) => (
               <div
@@ -163,17 +258,15 @@ const GymActivityGraph: React.FC<GymActivityGraphProps> = ({
               <div key={weekIndex} className={styles.week}>
                 {week.map((date, dayIndex) => {
                   const dateStr = formatDate(date);
-                  const activity = activityMap.get(dateStr);
-                  const person1 = activity?.person1 || false;
-                  const person2 = activity?.person2 || false;
-                  const statusClass = getStatusClass(person1, person2);
+                  const activityData = activityMap.get(dateStr);
+                  const users = activityData?.users || [];
                   const isFuture = date > new Date();
 
                   if (isFuture) {
                     return (
                       <div
                         key={dayIndex}
-                        className={`${styles.cell} ${styles[statusClass]} ${styles.future}`}
+                        className={`${styles.cell} ${styles.none} ${styles.future}`}
                       />
                     );
                   }
@@ -181,24 +274,36 @@ const GymActivityGraph: React.FC<GymActivityGraphProps> = ({
                   return (
                     <Tooltip.Root key={dayIndex}>
                       <Tooltip.Trigger asChild>
-                        <div
-                          className={`${styles.cell} ${styles[statusClass]}`}
-                        />
+                        <div className={`${styles.cell} ${users.length === 0 ? styles.none : ''}`}>
+                          {renderSplitCell(users)}
+                        </div>
                       </Tooltip.Trigger>
                       <Tooltip.Portal>
                         <AnimatedTooltipContent
                           className={styles.tooltipContent}
                           sideOffset={5}
                         >
-                          <div className={styles.tooltipPerson}>
-                            <span className={styles.person1Dot}></span>
-                            {person1Name}: {person1 ? '✓' : '✗'}
-                          </div>
-                          <div className={styles.tooltipPerson}>
-                            <span className={styles.person2Dot}></span>
-                            {person2Name}: {person2 ? '✓' : '✗'}
-                          </div>
                           <div className={styles.tooltipDate}>{getDateDisplay(date)}</div>
+                          {users.length > 0 ? (
+                            <div className={styles.tooltipUsers}>
+                              <div className={styles.tooltipUsersLabel}>
+                                {users.length} {users.length === 1 ? 'person' : 'people'} attended:
+                              </div>
+                              {users.map((username, idx) => (
+                                <div key={idx} className={styles.tooltipUser}>
+                                  <span 
+                                    className={styles.tooltipUserColor}
+                                    style={{ backgroundColor: userColorMap.get(username) }}
+                                  />
+                                  {username}
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className={styles.tooltipStatus}>
+                              ✗ No one attended
+                            </div>
+                          )}
                         </AnimatedTooltipContent>
                       </Tooltip.Portal>
                     </Tooltip.Root>
@@ -209,22 +314,20 @@ const GymActivityGraph: React.FC<GymActivityGraphProps> = ({
           </div>
         </div>
 
-        <div className={styles.legend}>
-          <div className={styles.legendItem}>
-            <div className={`${styles.legendCell} ${styles.none}`} />
-            <span className={styles.legendText}>None</span>
-          </div>
-          <div className={styles.legendItem}>
-            <div className={`${styles.legendCell} ${styles.person1Only}`} />
-            <span className={styles.legendText}>{person1Name}</span>
-          </div>
-          <div className={styles.legendItem}>
-            <div className={`${styles.legendCell} ${styles.person2Only}`} />
-            <span className={styles.legendText}>{person2Name}</span>
-          </div>
-          <div className={styles.legendItem}>
-            <div className={`${styles.legendCell} ${styles.both}`} />
-            <span className={styles.legendText}>Both</span>
+        <div className={styles.userLegend}>
+          <div className={styles.userLegendItems}>
+            {Array.from(userColorMap.entries())
+              .sort(([a], [b]) => a.localeCompare(b))
+              .map(([username, color]) => (
+                <div key={username} className={styles.userLegendItem}>
+                  <div 
+                    className={styles.userLegendColor}
+                    style={{ backgroundColor: color }}
+                  />
+                  <span className={styles.userLegendName}>{username}</span>
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>

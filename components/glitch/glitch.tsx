@@ -16,7 +16,7 @@ function Glitch ({
 
   return (
     <span
-      className={`${styles.glitch} cursor-default inline-block${customCursorVisible ? ' !cursor-none' : ''}`}
+      className={`${styles.glitch} cursor-default inline-block${customCursorVisible ? ' cursor-none!' : ''}`}
     >
       <span
         className={styles.glitchAnimation}
