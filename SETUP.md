@@ -12,8 +12,8 @@ touch .env.local
 Add the following content to `.env.local`:
 
 ```
-SUPABASE_URL=your_supabase_project_url_here
-SUPABASE_ANON_KEY=your_supabase_anon_key_here
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url_here
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_NEXT_PUBLIC_SUPABASE_ANON_KEY_here
 ```
 
 ## Getting Supabase Credentials
