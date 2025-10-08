@@ -17,7 +17,7 @@ export const supabase = createClient(supabaseUrl || '', supabaseKey || '');
 export const auth = {
   // Sign up with email/password
   signUp: async (email: string, password: string) => {
-    return await supabase.auth.signUp({ email, password });
+    return await supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/auth/callback` }});
   },
 
   // Sign in with email/password
