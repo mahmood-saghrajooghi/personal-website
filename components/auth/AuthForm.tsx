@@ -11,6 +11,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [signUpSuccess, setSignUpSuccess] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,7 +22,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
       if (isSignUp) {
         const { error } = await auth.signUp(email, password);
         if (error) throw error;
-        setError('Check your email for the confirmation link!');
+        setSignUpSuccess(true);
       } else {
         const { error } = await auth.signIn(email, password);
         if (error) throw error;
@@ -44,6 +45,30 @@ const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
       setLoading(false);
     }
   };
+
+  if (signUpSuccess) {
+    return (
+      <div className="max-w-md mx-auto mt-8 p-6 bg-(--sand-3) rounded-lg shadow-md border border-(--sand-6)">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4 text-(--sand-12)">
+            Check Your Email
+          </h2>
+          <p className="text-(--sand-11) mb-4">
+            We've sent you a confirmation link to <span className="font-semibold text-(--sand-12)">{email}</span>.
+          </p>
+          <p className="text-(--sand-11) mb-6">
+            Please check your inbox and click the link to confirm your email address.
+          </p>
+          <button
+            onClick={() => setSignUpSuccess(false)}
+            className="text-(--sand-11) hover:text-(--sand-12) text-sm underline hover:no-underline transition-colors"
+          >
+            Back to sign in
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-(--sand-3) rounded-lg shadow-md border border-(--sand-6)">
@@ -93,37 +118,13 @@ const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
         </button>
       </form>
 
-        <div className="mt-6">
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-(--sand-6)" />
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-(--sand-3) text-(--sand-11)">Or continue with</span>
-          </div>
-        </div>
-
-        <div className="mt-6 grid grid-cols-2 gap-3">
-          <button
-            onClick={() => handleOAuthSignIn('google')}
-            disabled={loading}
-            className="w-full inline-flex justify-center py-2 px-4 border border-(--sand-6) rounded-md shadow-xs bg-(--sand-2) text-sm font-medium text-(--sand-11) hover:bg-(--sand-4) disabled:opacity-50"
-          >
-            Google
-          </button>
-          <button
-            onClick={() => handleOAuthSignIn('github')}
-            disabled={loading}
-            className="w-full inline-flex justify-center py-2 px-4 border border-(--sand-6) rounded-md shadow-xs bg-(--sand-2) text-sm font-medium text-(--sand-11) hover:bg-(--sand-4) disabled:opacity-50"
-          >
-            GitHub
-          </button>
-        </div>
-      </div>
 
       <div className="mt-6 text-center">
         <button
-          onClick={() => setIsSignUp(!isSignUp)}
+          onClick={() => {
+            setIsSignUp(!isSignUp);
+            setError('');
+          }}
           className="text-(--sand-11) hover:text-(--sand-12) text-sm underline hover:no-underline transition-colors"
         >
           {isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
