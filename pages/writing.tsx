@@ -33,7 +33,7 @@ const IndexPage = () => {
           <BlurIn asChild>
             <p className='mb-7'>
               Quite often, I wander in the world of thought. <span id="action">It can be productive if it's followed by
-              action. Otherwise, it can turn one into <Link href='https://en.wikipedia.org/wiki/Oblomov' target="_" className='px-1'>Oblomov</Link>.</span> But
+                action. Otherwise, it can turn one into <Link href='https://en.wikipedia.org/wiki/Oblomov' target="_" className='px-1'>Oblomov</Link>.</span> But
               that caution shouldn't stop one from thinking in order to remove one's bad ideas and replace
               them with better ones.
             </p>
@@ -84,8 +84,11 @@ const IndexPage = () => {
           <BlurIn className='mb-2 flex items-center gap-2'>
             <NavLink href="/writing/thinking-machines">Thinking machines</NavLink>
           </BlurIn>
-          <BlurIn className='mb-7 flex items-center gap-2'>
+          <BlurIn className='mb-2 flex items-center gap-2'>
             <NavLink href="/writing/you-deserve-it">You deserve it</NavLink>
+          </BlurIn>
+          <BlurIn className='mb-7 flex items-center gap-2'>
+            <NavLink href="/writing/analogy-vs-first-principles">Thinking from first principles</NavLink>
           </BlurIn>
 
           <BlurIn asChild>
